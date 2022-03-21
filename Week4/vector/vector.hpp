@@ -13,6 +13,7 @@ struct Vector3D
     int z;
 };
 
+double determinant(double a11, double a12, double a21, double a22);
 double length(const Vector3D &vector);
 double scalarProduct(const Vector3D &a, const Vector3D &b);//, double angle);
 bool arePerpendicular(const Vector3D &a, const Vector3D &b);

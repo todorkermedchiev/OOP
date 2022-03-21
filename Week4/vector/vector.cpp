@@ -26,6 +26,11 @@ double sqrt_a(double num, double eps = 0.001)
     return next;
 }*/
 
+double determinant(double a11, double a12, double a21, double a22)
+{
+    return a11 * a22 - a21 * a22;
+}
+
 double length(const Vector3D &vector)
 {
     double squaredLen = vector.x * vector.x + vector.y * vector.y + vector.z * vector.z;
@@ -52,8 +57,11 @@ bool arePerpendicular(const Vector3D &a, const Vector3D &b)
 
 Vector3D vectorProduct(const Vector3D &a, const Vector3D &b)
 {
-    // ...
     Vector3D vector;
+    vector.x = determinant(a.y, b.y, a.z, b.z);
+    vector.y = determinant(a.z, b.z, a.x, b.x);
+    vector.z = determinant(a.x, b.x, a.y, b.y);
+    
     return vector;
 }
 
