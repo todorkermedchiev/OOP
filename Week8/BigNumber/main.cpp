@@ -4,7 +4,7 @@
 using namespace std;
 
 int main() {
-    BigNumber a("123456789");
+    BigNumber    a("123456789");
     BigNumber b("654986532416");
     BigNumber c = a + b;
 
