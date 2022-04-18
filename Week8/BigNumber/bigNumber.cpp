@@ -67,37 +67,38 @@ BigNumber::~BigNumber() {
 BigNumber BigNumber::operator+(const BigNumber &other) const {
     BigNumber newNumber;// = *this;
     unsigned int rest = 0;
-    ull thisSize = this->fillSize;
-    ull otherSize = other.fillSize;
+    long long thisSize = this->fillSize;
+    long long otherSize = other.fillSize;
     newNumber.fillSize = (thisSize > otherSize ? thisSize : otherSize);
 
     while (newNumber.fillSize > newNumber.capacity) {
         newNumber.resize();
     }
-
-    // cout << "Capacity: " << newNumber.capacity << endl;
-    // cout << "Fill Size " << newNumber.fillSize << endl;
-
     --thisSize;
     --otherSize;
     char thisCurrent;
     char otherCurrent;
 
     for (int i = newNumber.fillSize - 1; i >= 0; --i) {
-        if (thisSize < 0) {
-            thisCurrent = '0';
-            otherCurrent = other.data[otherSize--];
+        thisCurrent = '0';
+        otherCurrent = '0';
+
+        // cout << "this: " << thisSize << "; other: " << otherSize << "; rest: ";
+
+        if (thisSize >= 0) {
+            thisCurrent = this->data[thisSize];
+            --thisSize;
         }
-        else if (otherSize < 0) {
-            thisCurrent = this->data[thisSize--];
-            otherCurrent = '0';
-        }
-        else {
-            thisCurrent = this->data[thisSize--];
-            otherCurrent = other.data[otherSize--];
+
+        if (otherSize >= 0) {
+            otherCurrent = other.data[otherSize];
+            --otherSize;
         }
 
         rest += thisCurrent + otherCurrent - 2 * '0';
+        
+        // cout << rest << endl;
+        
         newNumber.data[i] = rest % 10 + '0';
         rest /= 10;
     }
@@ -115,7 +116,6 @@ BigNumber BigNumber::operator+(const BigNumber &other) const {
         if (newNumber.fillSize >= newNumber.capacity) {
             newNumber.resize();
         }
-
         // Изместване на елементите на масива с толкова позиции,
         // колкото цифри има преноса (rest)
         for (int i = newNumber.fillSize - 1; i >= 0; --i) {
