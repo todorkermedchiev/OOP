@@ -72,10 +72,14 @@ public:
 
     void add(const Task &newTask);
     void finish(const char* name);
-    void printUndone() const;
-    void printDone() const;
+    void printUnfinished() const;
+    void printFinished() const;
+    void printByLabel(const char *labelName) const;
+    void clear();
+    int getFinishedCount() const;
+    int getUnfinishedCount() const;
 
-    friend std::ostream &operator<<(const std::ostream &out, const Project &project);
+    // friend std::ostream &operator<<(const std::ostream &out, const Project &project);
 };
 
 #endif // LIST_HPP

@@ -11,7 +11,7 @@ void Label::copyFrom(const Label &other) {
     id = other.id;
 }
 
-Label::Label(ull id = 0, const char *name = "") {
+Label::Label(ull id , const char *name) {
     this->id = id;
     strcpy(this->name, name);
 }
@@ -80,8 +80,10 @@ ostream &operator<<(ostream &out, const Task &task) {
         default:
             break;
         }
-        out << "**)" << endl;
+        out << "**)";
     }
+    out << endl;
+    return out;
 }
 
 const char *Task::getName() const {
@@ -183,7 +185,7 @@ void Project::finish(const char* name) {
     tasks[index].setIsDone(true);
 }
 
-void Project::printUndone() const {
+void Project::printUnfinished() const {
     for (int i = 0; i < fillSize; ++i) {
         if (!tasks[i].getIsDone() && tasks[i].getPriority() == URGENT) {
             cout << tasks[i];
@@ -206,7 +208,7 @@ void Project::printUndone() const {
     }
 }
 
-void Project::printDone() const {
+void Project::printFinished() const {
     for (int i = 0; i < fillSize; ++i) {
         if (tasks[i].getIsDone()) {
             cout << tasks[i];
@@ -214,12 +216,45 @@ void Project::printDone() const {
     }
 }
 
+void Project::printByLabel(const char *labelName) const {
+    cout << "#### Label: \'" << labelName << "\'\n\n";
+    cout << "### Unfinished\n\n";
+    printUnfinished();
+    cout << endl;
+    cout << "### Finished\n\n";
+    printFinished();
+}
+
+void Project::clear() {
+    fillSize = 0;
+}
+
+int Project::getFinishedCount() const {
+    int counter = 0;
+    for (int i = 0; i < fillSize; ++i) {
+        if (tasks[i].getIsDone()) {
+            ++counter;
+        }
+    }
+    return counter;
+}
+
+int Project::getUnfinishedCount() const {
+    int counter = 0;
+    for (int i = 0; i < fillSize; ++i) {
+        if (!tasks[i].getIsDone()) {
+            ++counter;
+        }
+    }
+    return counter;
+}
+
 Project::~Project() {
     free();
 }
 
-ostream &operator<<(ostream &out, const Project &project) {
-    // for (int i = 0; i < project.fillSize; ++i) {
+// ostream &operator<<(ostream &out, const Project &project) {
+//     // for (int i = 0; i < project.fillSize; ++i) {
         
-    // }
-}
+//     // }
+// }
