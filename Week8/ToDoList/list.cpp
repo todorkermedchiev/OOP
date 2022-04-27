@@ -25,6 +25,10 @@ Label &Label::operator=(const Label &other) {
     return *this;
 }
 
+const char *Label::getName() const {
+    return name;
+}
+
 // Task
 void Task::free() {
     delete[] name;
@@ -102,8 +106,8 @@ bool Task::getIsDone() const {
     return done;
 }
 
-void Task::setIsDone(bool isDone) {
-    done = isDone;
+void Task::setIsDone(bool isFinished) {
+    done = isFinished;
 }
 
 // Project
@@ -130,6 +134,7 @@ unsigned int Project::find(const char *name) const {
         if (strcmp(tasks[index].getName(), name) == 0) {
             return index;
         }
+        ++index;
     }
     return -1;
 }
@@ -219,10 +224,21 @@ void Project::printFinished() const {
 void Project::printByLabel(const char *labelName) const {
     cout << "#### Label: \'" << labelName << "\'\n\n";
     cout << "### Unfinished\n\n";
-    printUnfinished();
+
+    for (int i = 0; i < fillSize; ++i) {
+        if (strcmp(tasks[i].getLabel().getName(), labelName) == 0 && !tasks[i].getIsDone()) {
+            cout << tasks[i];
+        }
+    }
+
     cout << endl;
     cout << "### Finished\n\n";
-    printFinished();
+    
+    for (int i = 0; i < fillSize; ++i) {
+        if (strcmp(tasks[i].getLabel().getName(), labelName) == 0 && tasks[i].getIsDone()) {
+            cout << tasks[i];
+        }
+    }
 }
 
 void Project::clear() {
@@ -253,8 +269,13 @@ Project::~Project() {
     free();
 }
 
-// ostream &operator<<(ostream &out, const Project &project) {
-//     // for (int i = 0; i < project.fillSize; ++i) {
-        
-//     // }
-// }
+ostream &operator<<(ostream &out, const Project &project) {
+    out << "### Unfinished\n\n";
+    out << project.getUnfinishedCount() << " tasks:\n";
+    project.printUnfinished();
+    out << endl;
+    out << "### Finished\n\n";
+    out << project.getFinishedCount() << " tasks:\n";
+    project.printFinished();
+    return out;
+}

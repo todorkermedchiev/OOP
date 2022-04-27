@@ -26,6 +26,8 @@ public:
     Label(ull id = 0, const char *name = "");
     Label(const Label& other);
     Label &operator=(const Label &other);
+
+    const char *getName() const;
 };
 
 class Task {
@@ -50,7 +52,7 @@ public:
     const Label &getLabel() const;
     bool getIsDone() const;
 
-    void setIsDone(bool isDone);
+    void setIsDone(bool isFinished);
 };
 
 class Project
@@ -79,7 +81,7 @@ public:
     int getFinishedCount() const;
     int getUnfinishedCount() const;
 
-    // friend std::ostream &operator<<(const std::ostream &out, const Project &project);
+    friend std::ostream &operator<<(std::ostream &out, const Project &project);
 };
 
 #endif // LIST_HPP
