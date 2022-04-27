@@ -1,5 +1,7 @@
 #include <iostream>
-#include "list.hpp"
+#include "label.hpp"
+#include "task.hpp"
+#include "project.hpp"
 
 using namespace std;
 
