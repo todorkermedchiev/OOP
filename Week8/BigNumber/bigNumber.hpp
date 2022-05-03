@@ -23,8 +23,8 @@ public:
 
     BigNumber operator+(const BigNumber &other) const;
     BigNumber operator-(const BigNumber &other) const;
-    BigNumber operator*(const BigNumber &other) const;
-    BigNumber operator/(const BigNumber &other) const;
+    // BigNumber operator*(const BigNumber &other) const;
+    // BigNumber operator/(const BigNumber &other) const;
     
 };
 

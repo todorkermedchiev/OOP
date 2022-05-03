@@ -7,7 +7,7 @@
 using namespace std;
 
 void BigNumber::print() {
-    data[fillSize] = '\0';
+    // data[fillSize] = '\0';
     cout << data << endl;
 }
 
@@ -65,7 +65,7 @@ BigNumber::~BigNumber() {
 }
 
 BigNumber BigNumber::operator+(const BigNumber &other) const {
-    BigNumber newNumber;// = *this;
+    BigNumber newNumber;
     unsigned int rest = 0;
     long long thisSize = this->fillSize;
     long long otherSize = other.fillSize;
@@ -83,8 +83,6 @@ BigNumber BigNumber::operator+(const BigNumber &other) const {
         thisCurrent = '0';
         otherCurrent = '0';
 
-        // cout << "this: " << thisSize << "; other: " << otherSize << "; rest: ";
-
         if (thisSize >= 0) {
             thisCurrent = this->data[thisSize];
             --thisSize;
@@ -96,8 +94,6 @@ BigNumber BigNumber::operator+(const BigNumber &other) const {
         }
 
         rest += thisCurrent + otherCurrent - 2 * '0';
-        
-        // cout << rest << endl;
         
         newNumber.data[i] = rest % 10 + '0';
         rest /= 10;
@@ -127,6 +123,50 @@ BigNumber BigNumber::operator+(const BigNumber &other) const {
             newNumber.data[i] = rest % 10 + '0';
             rest /= 10;
         }
+    }
+
+    return newNumber;
+}
+
+BigNumber BigNumber::operator-(const BigNumber &other) const {
+    BigNumber newNumber;
+    // unsigned int rest = 0;
+    long long thisSize = this->fillSize;
+    long long otherSize = other.fillSize;
+    newNumber.fillSize = (thisSize > otherSize ? thisSize : otherSize);
+
+    while (newNumber.capacity < newNumber.fillSize) {
+        newNumber.resize();
+    }
+    int thisSizeCpy = thisSize;
+    for (int i = newNumber.fillSize; i >=0 && thisSizeCpy >= 0; --i) {
+        newNumber.data[i] = this->data[thisSizeCpy--];
+    }
+    // cout << newNumber.data;
+
+    char thisCurrent;
+    char otherCurrent;
+    --thisSize;
+    --otherSize;
+    int diff;
+    int newDigit;
+    for (int i = newNumber.fillSize; i >= 0; --i) {
+        thisCurrent = this->data[thisSize--];
+        otherCurrent = other.data[otherSize--];
+
+        diff = thisCurrent - otherCurrent;
+        
+        if (diff < 0) {
+            newDigit = 10 + diff % 10;
+            newNumber.data[i - 1] -= diff % 100;
+    cout << "*" << newNumber.data << endl;
+        }
+        else {
+            newDigit = diff;
+        }
+
+        newNumber.data[i] = newDigit;
+    cout << "**" << newNumber.data << endl;
     }
 
     return newNumber;
