@@ -35,13 +35,7 @@ public:
     void pop_back();
 
     friend std::ostream &operator<< <> (std::ostream &out, const Vector &vec);
-    // {
-    //     for (int i = 0; i < vec.elementsCount; ++i) {
-    //     out << vec.data[i] << ' ';
-    //     }
-    //     out << '\n';
-    //     return out;
-    // }
+    const T &operator[](unsigned int index) const;
 
     ~Vector();
 };
@@ -83,6 +77,7 @@ bool Vector<T>::empty() const {
 template <typename T>
 T Vector<T>::at(unsigned int index) const {
     if (index < 0 || index >= elementsCount) {
+        // exception
         return 0;
     }
 
@@ -165,6 +160,11 @@ std::ostream &operator<<(std::ostream &out, const Vector<T> &vec) {
     }
     out << '\n';
     return out;
+}
+
+template <typename T>
+const T &Vector<T>::operator[](unsigned int index) const {
+    return at(index);
 }
 
 #endif // VECTOR_HPP
