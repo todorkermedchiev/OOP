@@ -41,7 +41,7 @@ public:
 		return type;
 	}
 
-	u_int getFuelTankCapacity() cosnt {
+	u_int getFuelTankCapacity() const {
 		return fuelTankCapacity;
 	}
 
