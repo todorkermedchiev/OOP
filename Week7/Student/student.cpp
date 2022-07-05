@@ -29,6 +29,7 @@ Student::Student(
 }
 
 Student::Student(const Student &other) {
+    name = nullptr;
     setName(other.getName());
     setFn(other.getFn());
     setAge(other.getAge());
